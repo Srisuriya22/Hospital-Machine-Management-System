@@ -40,6 +40,16 @@ router.get('/all', auth, async (req, res) => {
   }
 });
 
+// Fetch all machines for all users
+router.get('/all-machines', async (req, res) => {
+  try {
+    const machines = await Machine.find({});
+    res.status(200).json({ success: true, machines });
+  } catch (err) {
+    console.error('Error fetching machines:', err);
+    res.status(500).json({ success: false, message: 'Error fetching machines', error: err.message });
+  }
+});
 // Fetch a single machine by ID
 router.get('/:id', auth, async (req, res) => {
   try {
@@ -53,6 +63,8 @@ router.get('/:id', auth, async (req, res) => {
     res.status(500).json({ success: false, message: 'Server Error', error: err.message });
   }
 });
+
+
 
 // Update machine
 router.put('/update/:id', auth, async (req, res) => {
